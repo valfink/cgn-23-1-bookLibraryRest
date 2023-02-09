@@ -3,7 +3,6 @@ package com.example.cgn231booklibraryrest.controller;
 import com.example.cgn231booklibraryrest.model.Book;
 import com.example.cgn231booklibraryrest.model.BookFormat;
 import com.example.cgn231booklibraryrest.repository.BookRepo;
-import com.example.cgn231booklibraryrest.service.BookService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -67,6 +65,21 @@ class BookControllerTest {
                         "author": "Walle",
                         "bookFormat": "HARD_COVER"
                     }
+                ]
+                """));
+
+        // THEN
+    }
+
+    @Test
+    @DirtiesContext
+    void getBooks_emptyList() throws Exception {
+
+        // WHEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                [
                 ]
                 """));
 
