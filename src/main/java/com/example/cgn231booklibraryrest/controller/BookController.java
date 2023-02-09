@@ -30,17 +30,14 @@ public class BookController {
         return bookService.addBook(incomingBook);
     }
 
-    @PutMapping("/{isbn}")
-    public Book putBook(@RequestParam String isbn, @RequestBody Book incomingBook) {
-        boolean searchedBookIsThere = bookService.getBookByIsbn(isbn).length() > 0;
-        bookService.removeBookByIsbn(isbn);
-        return bookService.addBook(incomingBook);
+    @PutMapping("/")
+    public Book putBook(@RequestParam String isbn, @RequestBody Book putBook) {
+        return bookService.putBook(putBook, isbn);
     }
-//
-//    @DeleteMapping("/{isbn}")
-//    public Book deleteBook(@RequestParam String isbn) {
-//        return bookService.removeBookByIsbn(isbn);
-//    }
+    @DeleteMapping("/")
+    public Book deleteBook(@RequestParam String isbn) {
+        return bookService.deleteBookByIsbn(isbn);
+    }
 
 
 }

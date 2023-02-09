@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import com.example.cgn231booklibraryrest.model.Book;
 
+import javax.swing.text.html.Option;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,9 +59,7 @@ class BookServiceTest {
         //GIVEN
         when(bookRepo.getBookByISBN(b1.isbn())).thenReturn(Optional.empty());
         //THEN
-        assertThrows(NoSuchElementException.class, () -> {
-            bookService.getBookByISBN(b1.isbn());
-        });
+        assertThrows(NoSuchElementException.class, () -> bookService.getBookByISBN(b1.isbn()));
         verify(bookRepo).getBookByISBN(b1.isbn());
     }
     @Test
@@ -83,6 +82,27 @@ class BookServiceTest {
         assertEquals(authorExpected, authorActual);
         assertEquals(expectedFormat, actualFormat);
     }
+
+    @Test
+    void deleteBookTest(){
+        Book expectedBook = b1;
+        String isbnExpected= expectedBook.isbn();
+        String titleExpected= expectedBook.title();
+        String authorExpected= expectedBook.author();
+        BookFormat expectedFormat = expectedBook.bookFormat();
+        //WHEN
+        when(bookRepo.deleteBook(b1.isbn())).thenReturn(Optional.of(b1));
+        Book actualBook = bookService.deleteBookByIsbn(b1.isbn());
+        String isbnActual= actualBook.isbn();
+        String titleActual= actualBook.title();
+        String authorActual= actualBook.author();
+        BookFormat actualFormat = actualBook.bookFormat();
+        //THEN
+        assertEquals(isbnExpected, isbnActual);
+        assertEquals(titleExpected, titleActual);
+        assertEquals(authorExpected, authorActual);
+        assertEquals(expectedFormat, actualFormat);
+    }
     @Test
     void putBookTest(){
         //GIVEN
@@ -92,7 +112,8 @@ class BookServiceTest {
         String authorExpected= expectedBook.author();
         BookFormat expectedFormat = expectedBook.bookFormat();
         //WHEN
-        Book actualBook = bookService.putBook(b1Updated);
+        when(bookRepo.putBook(b1Updated, b1Updated.isbn())).thenReturn(Optional.ofNullable(b1Updated));
+        Book actualBook = bookService.putBook(b1Updated, b1Updated.isbn());
         String isbnActual= actualBook.isbn();
         String titleActual= actualBook.title();
         String authorActual= actualBook.author();

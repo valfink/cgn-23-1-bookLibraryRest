@@ -27,4 +27,26 @@ public class BookRepo {
                 .filter(b->b.isbn().equals(isbn))
                 .findFirst();
     }
+    public Optional<Book> putBook(Book bookToPut, String isbn){
+        Optional<Book> currentBook = books.values().stream()
+                .filter(b->b.isbn().equals(isbn))
+                .findFirst();
+        if(currentBook.isPresent()){
+        Book newBookInRepo = new Book(currentBook.get().id(), bookToPut.isbn(), bookToPut.title(), bookToPut.author(),
+                bookToPut.bookFormat());
+            books.put(currentBook.get().id(), newBookInRepo);
+            return Optional.of(newBookInRepo);
+        } else {
+            return Optional.empty();
+        }
+    }
+    public Optional<Book> deleteBook(String isbn) {
+         Optional<Book> bookToDelete = books.values().stream()
+                .filter(b->b.isbn().equals(isbn))
+                .findFirst();
+         books.remove(bookToDelete.get().id());
+         return bookToDelete;
+
+
+    }
 }

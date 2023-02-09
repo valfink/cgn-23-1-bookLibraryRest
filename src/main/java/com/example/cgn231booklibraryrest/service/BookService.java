@@ -26,9 +26,17 @@ public class BookService {
     public Book getBookByISBN(String isbn) {
         return bookRepo.getBookByISBN(isbn).orElseThrow(NoSuchElementException::new);
     }
-    //TODO: update
-    public Book putBook(Book updatedBook, String isbn) {
-        Optional<Book> book = bookRepo.getBookByISBN(isbn);
-        return null;
+    public Book deleteBookByIsbn(String isbn){
+        Optional<Book> deletedBook = bookRepo.deleteBook(isbn);
+        if (deletedBook.isPresent()) {
+            return deletedBook.get();
+        } else {
+            throw new NoSuchElementException("Element with ISBN "+isbn+" does not exist!");
+        }
+    }
+
+    public Book putBook(Book bookToUpdate, String isbn) {
+        Optional<Book> updatedBook = bookRepo.putBook(bookToUpdate, isbn);
+        return updatedBook.orElseThrow(NoSuchElementException::new);
     }
 }

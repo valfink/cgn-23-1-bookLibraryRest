@@ -81,7 +81,7 @@ class BookControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                 {
-                    "id": "425",
+                    "id": "ISB425",
                     "isbn": "ISBN78",
                     "title": "AmazingBook",
                     "author": "Johannes",
@@ -117,6 +117,53 @@ class BookControllerTest {
                     "bookFormat": "E_BOOK"
                 }
                 """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                {
+                    "isbn": "ISBN78",
+                    "title": "AmazingBook",
+                    "author": "Johannes",
+                    "bookFormat": "E_BOOK"
+                }
+                """
+                ))
+                .andExpect(jsonPath("$.id").isNotEmpty());
+    }
+    @Test
+    @DirtiesContext
+    void putBookTest() throws Exception {
+        //GIVEN
+        bookRepo.addBook(b1);
+        //THEN
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/?isbn=ISBN78")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("""
+                {
+                    "isbn": "ISBN78",
+                    "title": "BestBookEver",
+                    "author": "Johannes",
+                    "bookFormat": "E_BOOK"
+                }
+                """))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                {
+                    "isbn": "ISBN78",
+                    "title": "BestBookEver",
+                    "author": "Johannes",
+                    "bookFormat": "E_BOOK"
+                }
+                """
+                ))
+                .andExpect(jsonPath("$.id").isNotEmpty());
+    }
+    @Test
+    @DirtiesContext
+    void deleteBookTest() throws Exception {
+        //GIVEN
+        bookRepo.addBook(b1);
+        //THEN
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/?isbn=ISBN78"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                 {
