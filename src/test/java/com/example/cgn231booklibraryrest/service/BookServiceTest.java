@@ -7,13 +7,10 @@ import org.junit.jupiter.api.Test;
 
 import com.example.cgn231booklibraryrest.model.Book;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class BookServiceTest {
     Book b1, b2;

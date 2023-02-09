@@ -34,7 +34,7 @@ class BookControllerTest {
 
     @BeforeEach
     void setUp() {
-        b1 = new Book("ISB425", "ISBN78", "AmazingBook", "Johannes", BookFormat.E_BOOK);
+        b1 = new Book("425", "ISBN78", "AmazingBook", "Johannes", BookFormat.E_BOOK);
         b2 = new Book ("id69420", "ISBN2", "IncredibleBook", "Walle",BookFormat.HARD_COVER);
         bookMap = new HashMap<>(Map.of(b1.id(), b1, b2.id(), b2));
     }
@@ -74,15 +74,32 @@ class BookControllerTest {
     @Test
     @DirtiesContext
     void getBooks_emptyList() throws Exception {
-
-        // WHEN
         mockMvc.perform(MockMvcRequestBuilders.get("/api/books"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("""
                 [
                 ]
                 """));
+    }
+
+    @Test
+    @DirtiesContext
+    void getBookByIsbn() throws Exception {
+        // GIVEN
+        bookRepo.addBook(b1);
+        bookRepo.addBook(b2);
 
         // THEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + b1.isbn()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                {
+                    "id": "425",
+                    "isbn": "ISBN78",
+                    "title": "AmazingBook",
+                    "author": "Johannes",
+                    "bookFormat": "E_BOOK"
+                }
+                """));
     }
 }
