@@ -15,4 +15,11 @@ public class BookService {
     public List<Book> listBooks() {
         return bookRepo.listBooks();
     }
+
+    public Book addBook(Book addedBook) {
+        Book bookWithId = new Book(IDService.generateId(), addedBook.isbn(), addedBook.title(), addedBook.author(), addedBook.bookFormat());
+        bookRepo.addBook(bookWithId);
+        return bookWithId;
+
+    }
 }

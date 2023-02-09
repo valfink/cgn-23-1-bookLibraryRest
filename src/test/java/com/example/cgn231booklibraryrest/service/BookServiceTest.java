@@ -44,4 +44,24 @@ class BookServiceTest {
         // THEN
         assertEquals(expected, actual);
     }
+    @Test
+    void addBookTest(){
+        //GIVEN
+        Book expectedBook = b1;
+        String isbnExpected= expectedBook.isbn();
+        String titleExpected= expectedBook.title();
+        String authorExpected= expectedBook.author();
+        BookFormat expectedFormat = expectedBook.bookFormat();
+        //WHEN
+        Book actualBook = bookService.addBook(b1);
+        String isbnActual= actualBook.isbn();
+        String titleActual= actualBook.title();
+        String authorActual= actualBook.author();
+        BookFormat actualFormat = actualBook.bookFormat();
+        //THEN
+        assertEquals(isbnExpected, isbnActual);
+        assertEquals(titleExpected, titleActual);
+        assertEquals(authorExpected, authorActual);
+        assertEquals(expectedFormat, actualFormat);
+    }
 }

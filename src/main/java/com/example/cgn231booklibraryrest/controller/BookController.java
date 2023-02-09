@@ -24,12 +24,12 @@ public class BookController {
 //    public Book getBookByIsbn(PathVariable String isbn) {
 //        return bookService.getBookByIsbn(isbn);
 //    }
-//
-//    @PostMapping("/")
-//    public Book postBook(@RequestBody Book incomingBook){
-//        return bookService.addBook(incomingBook);
-//    }
-//
+
+    @PostMapping("/")
+    public Book postBook(@RequestBody Book incomingBook){
+        return bookService.addBook(incomingBook);
+    }
+
 //    @PutMapping("/{isbn}")
 //    public Book putBook(@RequestParam String isbn, @RequestBody Book incomingBook) {
 //        boolean searchedBookIsThere = bookService.getBookByIsbn(isbn).length() > 0;
