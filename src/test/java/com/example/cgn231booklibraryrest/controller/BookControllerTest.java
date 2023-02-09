@@ -71,6 +71,27 @@ class BookControllerTest {
 
     @Test
     @DirtiesContext
+    void getBookByIsbn() throws Exception {
+        // GIVEN
+        bookRepo.addBook(b1);
+        bookRepo.addBook(b2);
+
+        // THEN
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/books/" + b1.isbn()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("""
+                {
+                    "id": "425",
+                    "isbn": "ISBN78",
+                    "title": "AmazingBook",
+                    "author": "Johannes",
+                    "bookFormat": "E_BOOK"
+                }
+                """));
+    }
+
+    @Test
+    @DirtiesContext
     void getBooks_emptyList() throws Exception {
 
         // WHEN

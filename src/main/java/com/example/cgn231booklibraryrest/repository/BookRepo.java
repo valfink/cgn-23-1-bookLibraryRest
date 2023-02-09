@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 
 @Repository
@@ -20,5 +21,10 @@ public class BookRepo {
     public Book addBook(Book book) {
         books.put(book.id(), book);
         return book;
+    }
+    public Optional<Book> getBookByISBN (String isbn){
+        return books.values().stream()
+                .filter(b->b.isbn().equals(isbn))
+                .findFirst();
     }
 }

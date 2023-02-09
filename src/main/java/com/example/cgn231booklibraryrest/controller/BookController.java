@@ -20,22 +20,22 @@ public class BookController {
         return bookService.listBooks();
     }
 
-//    @GetMapping("/{isbn}")
-//    public Book getBookByIsbn(PathVariable String isbn) {
-//        return bookService.getBookByIsbn(isbn);
-//    }
+    @GetMapping("books/{isbn}")
+    public Book getBookByIsbn(@PathVariable String isbn) {
+        return bookService.getBookByISBN(isbn);
+    }
 
     @PostMapping("/")
     public Book postBook(@RequestBody Book incomingBook){
         return bookService.addBook(incomingBook);
     }
 
-//    @PutMapping("/{isbn}")
-//    public Book putBook(@RequestParam String isbn, @RequestBody Book incomingBook) {
-//        boolean searchedBookIsThere = bookService.getBookByIsbn(isbn).length() > 0;
-//        bookService.removeBookByIsbn(isbn);
-//        return bookService.addBook(incomingBook);
-//    }
+    @PutMapping("/{isbn}")
+    public Book putBook(@RequestParam String isbn, @RequestBody Book incomingBook) {
+        boolean searchedBookIsThere = bookService.getBookByIsbn(isbn).length() > 0;
+        bookService.removeBookByIsbn(isbn);
+        return bookService.addBook(incomingBook);
+    }
 //
 //    @DeleteMapping("/{isbn}")
 //    public Book deleteBook(@RequestParam String isbn) {
