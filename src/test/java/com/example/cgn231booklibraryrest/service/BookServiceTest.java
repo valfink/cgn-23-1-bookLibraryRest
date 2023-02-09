@@ -41,4 +41,25 @@ class BookServiceTest {
         // THEN
         assertEquals(expected, actual);
     }
+    @Test
+    void getBookByISBN(){
+        //GIVEN
+        Book expected = b1;
+        when(bookRepo.getBookByISBN(b1.isbn())).thenReturn(Optional.of(b1));
+        //WHEN
+        Book actual = bookService.getBookByISBN(b1.isbn());
+        //THEN
+        verify(bookRepo).getBookByISBN(b1.isbn());
+        assertEquals(expected, actual);
+    }
+    @Test
+    void getBookByISBN_exception(){
+        //GIVEN
+        when(bookRepo.getBookByISBN(b1.isbn())).thenReturn(Optional.empty());
+        //THEN
+        assertThrows(NoSuchElementException.class, () -> {
+            bookService.getBookByISBN(b1.isbn());
+        });
+        verify(bookRepo).getBookByISBN(b1.isbn());
+    }
 }

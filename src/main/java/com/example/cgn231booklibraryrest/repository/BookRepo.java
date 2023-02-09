@@ -22,4 +22,10 @@ public class BookRepo {
         books.put(book.id(), book);
         return book;
     }
+    public Optional<Book> getBookByISBN (String isbn){
+        return books.values().stream()
+                        .filter(b->b.isbn().equals(isbn))
+                        .findFirst();
+    }
+
 }

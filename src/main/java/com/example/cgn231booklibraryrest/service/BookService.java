@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,5 +16,9 @@ public class BookService {
 
     public List<Book> listBooks() {
         return bookRepo.listBooks();
+    }
+
+    public Book getBookByISBN(String isbn) {
+        return bookRepo.getBookByISBN(isbn).orElseThrow(NoSuchElementException::new);
     }
 }

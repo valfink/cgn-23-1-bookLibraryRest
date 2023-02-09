@@ -20,10 +20,10 @@ public class BookController {
         return bookService.listBooks();
     }
 
-//    @GetMapping("/{isbn}")
-//    public Book getBookByIsbn(PathVariable String isbn) {
-//        return bookService.getBookByIsbn(isbn);
-//    }
+    @GetMapping("books/{isbn}")
+    public Book getBookByIsbn(@PathVariable String isbn) {
+        return bookService.getBookByISBN(isbn);
+    }
 //
 //    @PostMapping("/")
 //    public Book postBook(@RequestBody Book incomingBook){
